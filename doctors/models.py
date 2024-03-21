@@ -5,7 +5,7 @@ class Doctor(models.Model):
     crm = models.CharField(max_length=12)
     email = models.CharField(unique=True)
     password = models.CharField()
-    phone = models.CharField(max_lenght=11)
+    phone = models.CharField(max_length=11)
     address = models.CharField()
     city = models.CharField()
     state = models.CharField(max_length=2)
