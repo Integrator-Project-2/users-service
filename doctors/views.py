@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.views import APIView
 from .models import Doctor
 from .serializers import DoctorSerializer
@@ -15,3 +16,21 @@ class DoctorViewSet(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         return Response({'message': 'delete method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
     
+class LoginView(APIView):
+    permission_classes = []
+    def post(self, request):
+        email = request.data['email']
+        password = request.data['password']
+        
+    
+        user = Doctor.objects.filter(email=email).first()
+        
+        if user is None:
+            raise AuthenticationFailed('User not found!')
+
+        if not user.check_password(password):
+            raise AuthenticationFailed('Incorrect password!')
+        
+        return Response({
+            'message': 'success'
+        })
