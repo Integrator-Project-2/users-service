@@ -5,6 +5,10 @@ from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.views import APIView
 from .models import Doctor
 from .serializers import DoctorSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+
 class DoctorViewSet(viewsets.ModelViewSet):
     queryset = Doctor.objects.all()
     serializer_class = DoctorSerializer
@@ -15,3 +19,14 @@ class DoctorViewSet(viewsets.ModelViewSet):
     
     def destroy(self, request, *args, **kwargs):
         return Response({'message': 'delete method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    
+class CustomTokenObtainPairView(TokenObtainPairView):
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+        if response.status_code == 200:
+            refresh_token = response.data.get('refresh')
+            access_token = response.data.get('access')
+            if refresh_token and access_token:
+                response.set_cookie('refresh_token', refresh_token, httponly=True)
+                response.set_cookie('access_token', access_token, httponly=True)
+        return response
