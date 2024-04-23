@@ -15,22 +15,3 @@ class DoctorViewSet(viewsets.ModelViewSet):
     
     def destroy(self, request, *args, **kwargs):
         return Response({'message': 'delete method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-    
-class LoginView(APIView):
-    permission_classes = []
-    def post(self, request):
-        email = request.data['email']
-        password = request.data['password']
-        
-    
-        user = Doctor.objects.filter(email=email).first()
-        
-        if user is None:
-            raise AuthenticationFailed('User not found!')
-
-        if not user.check_password(password):
-            raise AuthenticationFailed('Incorrect password!')
-        
-        return Response({
-            'message': 'success'
-        })
