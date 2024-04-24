@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from doctors.views import CustomTokenObtainPairView
+from authentication.views import CustomTokenObtainPairView
 from rest_framework_simplejwt.views import TokenRefreshView
 
 urlpatterns = [
