@@ -7,7 +7,7 @@ class PacientSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Pacient
-        fields = ['id', 'cpf', 'birth_date']
+        fields = ['id', 'cpf', 'birth_date', 'user']
         
     def create(self, validated_data):
         user_data = validated_data.pop('user')
