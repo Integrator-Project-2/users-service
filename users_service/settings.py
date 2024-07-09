@@ -47,8 +47,55 @@ INSTALLED_APPS = [
     'corsheaders',
     'authentication',
     'pacients',
-    'doctors'
+    'doctors',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'rest_framework.authtoken',
 ]
+
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+
+REST_USE_JWT = True
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+GOOGLE_CLIENT_ID='16603995931-ahq4q7mm31hacn4jf7v0jl5l21il5jhj.apps.googleusercontent.com'
+GOOGLE_CLIENT_SECRET = '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'
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': '16603995931-ahq4q7mm31hacn4jf7v0jl5l21il5jhj.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        },
+        'SCOPE': [
+            'profile',
+            'email',
+            'https://www.googleapis.com/auth/userinfo.profile',
+            'https://www.googleapis.com/auth/userinfo.email',
+            'https://www.googleapis.com/auth/user.phonenumbers.read', 
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'offline',
+        }
+    }
+}
+
+
+SOCIALACCOUNT_QUERY_EMAIL = True
+
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
@@ -108,6 +155,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'users_service.urls'
@@ -137,9 +185,9 @@ WSGI_APPLICATION = 'users_service.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv("POSTGRES_DB_NAME"),
-        'USER': os.getenv("POSTGRES_USERNAME"),
-        'PASSWORD': os.getenv("POSTGRES_PASSWORD"),
+        'NAME': 'users_service',
+        'USER': 'postgres',
+        'PASSWORD': '1248',
         'HOST': 'localhost',
         'PORT': '5432',
     }
