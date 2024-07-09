@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from authentication.views import CompleteProfileView, CustomTokenObtainPairView, GoogleCallbackView
+from authentication.views import CustomTokenObtainPairView, GoogleCallbackView
 from rest_framework_simplejwt.views import TokenRefreshView
 
 urlpatterns = [
@@ -10,11 +10,10 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/', include('doctors.urls')),
 
-    path('api/auth/', include('dj_rest_auth.urls')),
-    path('api/auth/registration/', include('dj_rest_auth.registration.urls')),
     path('api/auth/', include('allauth.urls')),
     # path('api/google/', GoogleLogin.as_view(), name='google_login'),
-    path('complete-profile/', CompleteProfileView.as_view(), name='complete_profile'),
     path('api/auth/google/callback/', GoogleCallbackView.as_view(), name='google_callback'),
+    path('dj-rest-auth/', include('dj_rest_auth.urls')),
+    path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     
 ]
