@@ -72,13 +72,15 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-GOOGLE_CLIENT_ID='16603995931-ahq4q7mm31hacn4jf7v0jl5l21il5jhj.apps.googleusercontent.com'
-GOOGLE_CLIENT_SECRET = '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'
+
+GOOGLE_CLIENT_ID= os.getenv('GOOGLE_CLIENT_ID')
+GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
+
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP': {
-            'client_id': '16603995931-ahq4q7mm31hacn4jf7v0jl5l21il5jhj.apps.googleusercontent.com',
-            'secret': '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',
+            'client_id': GOOGLE_CLIENT_ID,
+            'secret': GOOGLE_CLIENT_SECRET,
             'key': ''
         },
         'SCOPE': [
@@ -186,9 +188,9 @@ WSGI_APPLICATION = 'users_service.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'users_service',
-        'USER': 'postgres',
-        'PASSWORD': '1248',
+        'NAME': os.getenv('POSTGRES_DB_NAME'),
+        'USER': os.getenv('POSTGRES_USERNAME'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
         'HOST': 'localhost',
         'PORT': '5432',
     }
