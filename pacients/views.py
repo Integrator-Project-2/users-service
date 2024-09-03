@@ -14,9 +14,6 @@ class PacientViewSet(viewsets.ModelViewSet):
     queryset = Pacient.objects.all()
     serializer_class = PacientSerializer
     permission_classes = [CustomPacientPermission]
-    
-    def partial_update(self, request, *args, **kwargs):
-        return Response({'message': 'PATCH method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def destroy(self, request, *args, **kwargs):
         return Response({"message": "Delete method not allowed."}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
