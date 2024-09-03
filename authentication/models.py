@@ -1,6 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
-from django.contrib.auth.models import BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -9,7 +8,7 @@ class CustomUserManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
-        user.plain_password = password  # Armazena a senha em texto plano temporariamente
+        user.plain_password = password  # Temporarily store plain password
         user.save(using=self._db)
         return user
 
@@ -33,14 +32,15 @@ class User(AbstractBaseUser):
     password = models.CharField(max_length=128)
     address = models.CharField(max_length=255)
     phone = models.CharField(max_length=15)
-    
-    # Campo temporário para armazenar a senha em texto plano
-    plain_password = None 
-    
+
     objects = CustomUserManager()
-    
+
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name', 'password','phone', 'address']
-    
+    REQUIRED_FIELDS = ['name', 'password', 'phone', 'address']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.plain_password = None  # This is not a model field, just a temporary attribute
+
     def __str__(self):
         return self.name
