@@ -5,6 +5,7 @@ from authentication.models import User
 class Doctor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     crm = models.CharField(max_length=13)
+    specialty = models.CharField(max_length=100)
     
     def __str__(self):
         return self.user.name
