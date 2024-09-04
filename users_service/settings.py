@@ -105,11 +105,12 @@ SOCIALACCOUNT_QUERY_EMAIL = True
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+        # 'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny'
     ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+    # ),
 }
 
 SIMPLE_JWT = {
