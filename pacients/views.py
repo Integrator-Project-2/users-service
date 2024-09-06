@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from rest_framework import viewsets, status, permissions
 from .serializers import PacientSerializer
 from pacients.models import Pacient
+from rest_framework.decorators import action
+from rest_framework.permissions import AllowAny
 
 class PacientViewSet(viewsets.ModelViewSet):
     queryset = Pacient.objects.all()
