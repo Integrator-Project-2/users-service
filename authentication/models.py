@@ -32,15 +32,13 @@ class User(AbstractBaseUser):
     password = models.CharField(max_length=128)
     address = models.CharField(max_length=255)
     phone = models.CharField(max_length=15)
+    birth_date = models.DateField()
 
+    
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name', 'password', 'phone', 'address']
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.plain_password = None  # This is not a model field, just a temporary attribute
-
+    REQUIRED_FIELDS = ['name', 'password','phone', 'address', 'birth_date']
+    
     def __str__(self):
         return self.name

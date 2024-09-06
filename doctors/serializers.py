@@ -7,7 +7,7 @@ class DoctorSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Doctor
-        fields = ['id', 'user', 'crm']
+        fields = ['id', 'user', 'crm', 'specialty']
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')
