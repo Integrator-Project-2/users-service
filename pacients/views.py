@@ -13,6 +13,23 @@ class PacientViewSet(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         return Response({"message": "Delete method not allowed."}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
     
+    @action(detail=False, methods=['post'], url_path='search-by-ids')
+    def search_by_ids(self, request):
+        patient_ids = request.data.get('patient_ids', [])
+        
+        print("pegando patient_ids: ", patient_ids)
+        
+        if not patient_ids:
+            return Response({"error": "No patient IDs provided."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        patients = Pacient.objects.filter(id__in=patient_ids)
+        
+        if not patients.exists():
+            return Response({"error": "No patients found with the provided IDs."}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = PacientSerializer(patients, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
     @action(detail=False, methods=['post'], url_path='search-by-cpf')
     def search_by_cpf(self, request):
         cpf = request.data.get('cpf')
