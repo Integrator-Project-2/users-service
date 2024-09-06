@@ -37,3 +37,8 @@ class PacientSerializer(serializers.ModelSerializer):
         
         instance.save()
         return instance
+        
+class PacientReadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pacient
+        fields = ['id', 'cpf', 'user']

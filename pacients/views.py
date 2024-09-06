@@ -21,7 +21,7 @@ class PacientViewSet(viewsets.ModelViewSet):
         
         try:
             pacient = Pacient.objects.get(cpf=cpf)
-            serializer = self.get_serializer(pacient)
+            serializer = PacientSerializer(pacient) 
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Pacient.DoesNotExist:
             return Response({"error": "Pacient not found"}, status=status.HTTP_404_NOT_FOUND)
