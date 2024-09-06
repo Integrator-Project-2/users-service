@@ -32,7 +32,7 @@ class User(AbstractBaseUser):
     password = models.CharField(max_length=128)
     address = models.CharField(max_length=255)
     phone = models.CharField(max_length=15)
-    birth_date = models.DateField()
+    birth_date = models.DateField(null=True, blank=True)
 
     
     objects = CustomUserManager()
