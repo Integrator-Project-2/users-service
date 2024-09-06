@@ -28,6 +28,13 @@ class PacientViewSet(viewsets.ModelViewSet):
             return Response({"status": "Token atualizado com sucesso"})
         else:
             return Response({"error": "Token não fornecido"}, status=400)
+        
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
 
     def destroy(self, request, *args, **kwargs):
         return Response({"message": "Delete method not allowed."}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
