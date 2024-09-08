@@ -6,17 +6,11 @@ from pacients.models import Pacient
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 
-# class CustomPacientPermission(permissions.BasePermission):
-#     def has_permission(self, request, view):
-#         if request.method == 'POST': 
-#             return True
-#         return request.user and request.user.is_authenticated
 
 class PacientViewSet(viewsets.ModelViewSet):
     queryset = Pacient.objects.all()
     serializer_class = PacientSerializer
     permission_classes = [AllowAny] 
-    # permission_classes = [CustomPacientPermission]
 
     @action(detail=True, methods=['post'])
     def update_token(self, request, pk=None):
