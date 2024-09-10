@@ -17,7 +17,8 @@ class UserSerializer(serializers.ModelSerializer):
             name=validated_data['name'],
             email=validated_data['email'],
             address=validated_data['address'],
-            phone=validated_data['phone']
+            phone=validated_data['phone'],
+            birth_date=validated_data['birth_date']
         )
                 
         # Configura a senha criptografada e armazena a senha em texto plano temporariamente
